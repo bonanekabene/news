@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diary of a Muzungu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── CSS Custom Properties ── */
+    :root {
+      --green-dark:   #1a7a1a;
+      --green-mid:    #28a428;
+      --green-light:  #4cba4c;
+      --yellow:       #f5c800;
+      --yellow-dark:  #d4a900;
+      --red:          #cc1414;
+      --white:        #ffffff;
+      --off-white:    #f7f7f5;
+      --gray-light:   #ebebeb;
+      --gray-mid:     #999999;
+      --gray-dark:    #444444;
+      --black:        #111111;
+      --border-green: 3px solid var(--green-dark);
+      --border-yellow:3px solid var(--yellow);
+      --shadow-sm:    0 2px 8px rgba(0,0,0,0.12);
+      --shadow-md:    0 4px 18px rgba(0,0,0,0.18);
+      --shadow-lg:    0 8px 32px rgba(0,0,0,0.22);
+      --radius:       6px;
+      --font-display: 'Oswald', sans-serif;
+      --font-body:    'Open Sans', sans-serif;
+      --font-serif:   'Merriweather', serif;
+      --transition:   0.22s ease;
+    }
+
+    /* ── Reset & Base ── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--off-white);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color var(--transition);
+    }
+
+    img { display: block; max-width: 100%; }
+
+    ul { list-style: none; }
+
+    /* ── Top Bar ── */
+    .top-bar {
+      background-color: var(--white);
+      border-bottom: 4px solid var(--green-dark);
+      padding: 10px 0;
+    }
+
+    .top-bar__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logo__text {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .logo__text .word-diary { color: var(--red); }
+    .logo__text .word-of    { color: var(--green-dark); }
+    .logo__text .word-a     { color: var(--green-dark); }
+    .logo__text .word-muzungu { color: var(--green-dark); }
+
+    .logo__text .letter-highlight {
+      color: var(--yellow-dark);
+    }
+
+    /* Right side controls */
+    .top-bar__actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Podcast button */
+    .btn-podcast {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--white);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      cursor: pointer;
+      transition: background-color var(--transition), box-shadow var(--transition);
+    }
+
+    .btn-podcast:hover {
+      background-color: var(--yellow);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-podcast__icon {
+      width: 28px;
+      height: 28px;
+      background-color: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      transition: background-color var(--transition);
+    }
+
+    .btn-podcast:hover .btn-podcast__icon {
+      background-color: var(--yellow-dark);
+    }
+
+    /* Social icons */
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--green-dark);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: var(--green-dark);
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    .social-icon:hover {
+      background-color: var(--green-dark);
+      color: var(--white);
+    }
+
+    /* Newsletter button */
+    .btn-newsletter {
+      background-color: var(--green-dark);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      padding: 10px 20px;
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color var(--transition), box-shadow var(--transition);
+    }
+
+    .btn-newsletter:hover {
+      background-color: var(--green-mid);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      background-color: var(--white);
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .nav__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav__list {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav__item { position: relative; }
+
+    .nav__link {
+      display: block;
+      padding: 14px 16px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gray-dark);
+      letter-spacing: 0.01em;
+      border-bottom: 3px solid transparent;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .nav__link:hover,
+    .nav__link--active { color: var(--green-dark); border-bottom-color: var(--green-dark); }
+
+    .nav__link--podcast { color: var(--yellow-dark); }
+    .nav__link--podcast:hover { color: var(--yellow-dark); border-bottom-color: var(--yellow-dark); }
+
+    .nav__link--directory { color: var(--red); font-weight: 700; }
+    .nav__link--directory:hover { color: var(--red); border-bottom-color: var(--red); }
+
+    .nav__search-btn {
+      background: var(--yellow);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: var(--black);
+      transition: background-color var(--transition);
+    }
+
+    .nav__search-btn:hover { background-color: var(--yellow-dark); }
+
+    /* ── Main Content ── */
+    .main {
+      max-width: 1200px;
+      margin: 28px auto;
+      padding: 0 24px;
+    }
+
+    /* ── Hero Grid ── */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 20px;
+    }
+
+    /* ── Featured Card (left) ── */
+    .card-featured {
+      border: var(--border-green);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background-color: var(--green-dark);
+      position: relative;
+      box-shadow: var(--shadow-md);
+      transition: box-shadow var(--transition);
+      cursor: pointer;
+    }
+
+    .card-featured:hover { box-shadow: var(--shadow-lg); }
+
+    .card-featured__hero {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+    }
+
+    /* Travel hero image placeholder (gradient + overlay) */
+    .card-featured__bg {
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(135deg,
+          rgba(26, 122, 26, 0.45) 0%,
+          rgba(0, 0, 0, 0.1) 50%,
+          rgba(26, 122, 26, 0.25) 100%
+        ),
+        url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=900&q=80') center / cover no-repeat;
+      transition: transform 0.4s ease;
+    }
+
+    .card-featured:hover .card-featured__bg { transform: scale(1.03); }
+
+    /* Hashtag overlay */
+    .card-featured__hashtag {
+      position: absolute;
+      top: 14px;
+      right: 20px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    /* Travel text overlay */
+    .card-featured__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 28px 32px;
+    }
+
+    .card-featured__travel-heading {
+      font-family: var(--font-display);
+      font-size: 3.4rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+      margin-bottom: 8px;
+    }
+
+    .card-featured__travel-heading .heart {
+      color: #ff6b6b;
+      font-size: 3rem;
+    }
+
+    .card-featured__tagline {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      margin-bottom: 14px;
+    }
+
+    .card-featured__desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.92);
+      max-width: 340px;
+      line-height: 1.55;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* Author bar at bottom of image */
+    .card-featured__author-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+      padding: 32px 20px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-featured__avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--yellow);
+      background: url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&q=80') center / cover;
+      flex-shrink: 0;
+    }
+
+    .card-featured__author-info {
+      flex: 1;
+    }
+
+    .card-featured__author-name {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .card-featured__author-sub {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.75);
+      font-style: italic;
+    }
+
+    .card-featured__social-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .card-featured__social-row a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.8);
+      transition: color var(--transition);
+    }
+
+    .card-featured__social-row a:hover { color: var(--yellow); }
+
+    /* QR code element */
+    .card-featured__qr {
+      position: absolute;
+      bottom: 60px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      background-color: var(--white);
+      border: 2px solid var(--white);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .qr-placeholder {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      width: 56px;
+      height: 56px;
+    }
+
+    .qr-pixel {
+      background-color: var(--black);
+      border-radius: 1px;
+    }
+
+    .qr-pixel.white { background-color: var(--white); }
+
+    .card-featured__qr-label {
+      font-family: var(--font-display);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--black);
+      margin-top: 2px;
+    }
+
+    /* Caption strip */
+    .card-featured__caption {
+      background-color: var(--green-dark);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-featured__caption-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--yellow);
+      transition: color var(--transition);
+    }
+
+    .card-featured:hover .card-featured__caption-title { color: var(--white); }
+
+    .card-featured__views {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .card-featured__views svg { opacity: 0.85; }
+
+    /* ── Right Column ── */
+    .side-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Individual side card */
+    .card-side {
+      border: var(--border-yellow);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background-color: var(--white);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .card-side:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card-side__image {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .card-side:hover .card-side__image { transform: scale(1.04); }
+
+    .card-side__image-wrap {
+      overflow: hidden;
+      height: 190px;
+    }
+
+    /* Rhino card uses a nature photo */
+    .card-side__image--rhino {
+      background: url('https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=600&q=80') center / cover no-repeat;
+      width: 100%;
+      height: 190px;
+    }
+
+    /* Safari card */
+    .card-side__image--safari {
+      background: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80') center / cover no-repeat;
+      width: 100%;
+      height: 190px;
+    }
+
+    .card-side__body {
+      padding: 14px 16px 16px;
+      background-color: var(--white);
+    }
+
+    .card-side__title {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.4;
+      margin-bottom: 10px;
+      transition: color var(--transition);
+    }
+
+    .card-side:hover .card-side__title { color: var(--green-mid); }
+
+    .card-side__views {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--gray-mid);
+    }
+
+    /* ── Social Share Sidebar ── */
+    .social-sidebar {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      z-index: 100;
+    }
+
+    .social-sidebar__btn {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      transition: width var(--transition), padding-right var(--transition);
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .social-sidebar__btn--fb   { background-color: #1877f2; }
+    .social-sidebar__btn--li   { background-color: #0a66c2; }
+    .social-sidebar__btn--mail { background-color: #555555; }
+
+    .social-sidebar__btn:hover { width: 56px; }
+
+    /* ── WhatsApp Floating Button ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      left: 20px;
+      width: 52px;
+      height: 52px;
+      background-color: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.5);
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 200;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.65);
+    }
+
+    /* ── Eye icon SVG helper ── */
+    .icon-eye {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .top-bar__inner {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .nav__list {
+        flex-wrap: wrap;
+      }
+
+      .nav__link {
+        padding: 10px 10px;
+        font-size: 0.82rem;
+      }
+
+      .card-featured__travel-heading {
+        font-size: 2.4rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .social-sidebar { display: none; }
+
+      .logo__text { font-size: 1.4rem; }
+
+      .top-bar__actions { flex-wrap: wrap; gap: 8px; }
+
+      .card-featured__hero { height: 280px; }
+
+      .card-featured__travel-heading { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ Social Share Sidebar ══ -->
+  <aside class="social-sidebar" aria-label="Social sharing">
+    <a href="#" class="social-sidebar__btn social-sidebar__btn--fb" aria-label="Share on Facebook">f</a>
+    <a href="#" class="social-sidebar__btn social-sidebar__btn--li" aria-label="Share on LinkedIn">in</a>
+    <a href="#" class="social-sidebar__btn social-sidebar__btn--mail" aria-label="Share via email">✉</a>
+  </aside>
+
+  <!-- ══ Top Bar ══ -->
+  <header class="top-bar" role="banner">
+    <div class="top-bar__inner">
+
+      <!-- Logo -->
+      <a href="/" class="logo" aria-label="Diary of a Muzungu – Home">
+        <div class="logo__text">
+          <span class="word-diary">Di<span class="letter-highlight">a</span>ry</span><br>
+          <span class="word-of">of a </span><span class="word-muzungu">Muz<span class="letter-highlight">u</span>ngu</span>
+        </div>
+      </a>
+
+      <!-- Actions -->
+      <nav class="top-bar__actions" aria-label="Quick actions">
+
+        <!-- Podcast button -->
+        <button class="btn-podcast" type="button" aria-label="Listen to the Podcast">
+          <span class="btn-podcast__icon" aria-hidden="true">🎙️</span>
+          PODCAST
+        </button>
+
+        <!-- Social icons -->
+        <div class="social-icons" aria-label="Social media links">
+          <a href="#" class="social-icon" aria-label="Instagram">
+            <!-- Instagram icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="#" class="social-icon" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <a href="#" class="social-icon" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Newsletter -->
+        <button class="btn-newsletter" type="button">NEWSLETTER SIGNUP</button>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══ Main Navigation ══ -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <ul class="nav__list" role="list">
+        <li class="nav__item">
+          <a href="/" class="nav__link nav__link--active" aria-current="page">Home</a>
+        </li>
+        <li class="nav__item">
+          <a href="/podcast" class="nav__link nav__link--podcast">PODCAST</a>
+        </li>
+        <li class="nav__item">
+          <a href="/adventure" class="nav__link">Adventure</a>
+        </li>
+        <li class="nav__item">
+          <a href="/expat" class="nav__link">Expat</a>
+        </li>
+        <li class="nav__item">
+          <a href="/conservation" class="nav__link">Conservation</a>
+        </li>
+        <li class="nav__item">
+          <a href="/culture" class="nav__link">Culture</a>
+        </li>
+        <li class="nav__item">
+          <a href="/travel-tips" class="nav__link">Travel Tips</a>
+        </li>
+        <li class="nav__item">
+          <a href="/directory" class="nav__link nav__link--directory">DIRECTORY</a>
+        </li>
+        <li class="nav__item">
+          <a href="/contact" class="nav__link">Contact</a>
+        </li>
+      </ul>
+
+      <button class="nav__search-btn" type="button" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══ Main Content ══ -->
+  <main class="main" id="main-content">
+
+    <!-- Hero Grid -->
+    <section class="hero-grid" aria-label="Featured articles">
+
+      <!-- ─ Featured Card (left) ─ -->
+      <article class="card-featured" role="article">
+
+        <div class="card-featured__hero">
+
+          <!-- Background image -->
+          <div class="card-featured__bg" role="img" aria-label="Two hikers on a green hillside in Uganda"></div>
+
+          <!-- Hashtag -->
+          <span class="card-featured__hashtag" aria-hidden="true">#ExploreUganda</span>
+
+          <!-- Text overlay -->
+          <div class="card-featured__overlay">
+            <h2 class="card-featured__travel-heading">
+              D<span class="heart" aria-hidden="true">❤</span> YOU<br>TRAVEL?
+            </h2>
+            <p class="card-featured__tagline">LOOKING FOR TRAVEL IDEAS OR ADVICE?</p>
+            <p class="card-featured__desc">
+              Diary of a Muzungu takes readers in search of adventure! Read the blog,
+              follow on social media and visit the online Travel Directory for activity,
+              lodge and tour operator recommendations.
+            </p>
+          </div>
+
+          <!-- QR Code (decorative placeholder) -->
+          <div class="card-featured__qr" aria-hidden="true">
+            <div class="qr-placeholder">
+              <!-- Row 1 -->
+              <div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel"></div>
+              <!-- Row 2 -->
+              <div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div>
+              <!-- Row 3 -->
+              <div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div>
+              <!-- Row 4 -->
+              <div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div>
+              <!-- Row 5 -->
+              <div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div>
+              <!-- Row 6 -->
+              <div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div>
+              <!-- Row 7 -->
+              <div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel white"></div><div class="qr-pixel"></div><div class="qr-pixel"></div><div class="qr-pixel"></div>
+            </div>
+            <span class="card-featured__qr-label">SCAN ME</span>
+          </div>
+
+          <!-- Author bar -->
+          <div class="card-featured__author-bar">
+            <div class="card-featured__avatar" role="img" aria-label="Author photo"></div>
+            <div class="card-featured__author-info">
+              <div class="card-featured__author-name">Diary of a Muzungu</div>
+              <div class="card-featured__author-sub">Best Africa Travel Blog (est. 2008)</div>
+            </div>
+            <div class="card-featured__social-row" aria-label="Author social links">
+              <a href="#" aria-label="Author Facebook">f</a>
+              <a href="#" aria-label="Author Instagram">📷</a>
+              <a href="#" aria-label="Author Twitter">✖</a>
+              <a href="#" aria-label="Author LinkedIn">in</a>
+            </div>
+          </div>
+
+        </div><!-- /.card-featured__hero -->
+
+        <!-- Caption strip -->
+        <div class="card-featured__caption">
+          <h3 class="card-featured__caption-title">
+            <a href="/start-here">New to Diary of a Muzungu? Start here</a>
+          </h3>
+          <span class="card-featured__views" aria-label="54,799 views">
+            <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            54,799 views
+          </span>
+        </div>
+
+      </article><!-- /.card-featured -->
+
+      <!-- ─ Side Cards (right) ─ -->
+      <div class="side-cards">
+
+        <!-- Card 1: Rhinos -->
+        <article class="card-side" role="article">
+          <div class="card-side__image-wrap">
+            <div class="card-side__image card-side__image--rhino" role="img" aria-label="Rangers at Kidepo Valley National Park"></div>
+          </div>
+          <div class="card-side__body">
+            <h3 class="card-side__title">
+              <a href="/kidepo-rhinos">Kidepo's rhinos make it Uganda's first – and only – "Big Five" national park</a>
+            </h3>
+            <span class="card-side__views" aria-label="4,286 views">
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              4,286 views
+            </span>
+          </div>
+        </article>
+
+        <!-- Card 2: Travel Safety -->
+        <article class="card-side" role="article">
+          <div class="card-side__image-wrap">
+            <div class="card-side__image card-side__image--safari" role="img" aria-label="Giraffe in Uganda safari"></div>
+          </div>
+          <div class="card-side__body">
+            <h3 class="card-side__title">
+              <a href="/travel-safely-uganda">Tips on travelling safely in Uganda: tour operators suspended (and my advice)</a>
+            </h3>
+            <span class="card-side__views" aria-label="6,761 views">
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              6,761 views
+            </span>
+          </div>
+        </article>
+
+      </div><!-- /.side-cards -->
+
+    </section><!-- /.hero-grid -->
+
+  </main>
+
+  <!-- ══ WhatsApp Float ══ -->
+  <a href="https://wa.me/" class="whatsapp-float" aria-label="Chat on WhatsApp" target="_blank" rel="noopener noreferrer">
+    <!-- WhatsApp SVG icon -->
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+    </svg>
+  </a>
+
+</body>
+</html>
