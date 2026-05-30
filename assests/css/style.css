@@ -77,6 +77,10 @@
             color: #fff;
         }
 
+        .top-advert {
+    border: 5px solid red;
+}
+
         .advert-wrapper {
             width: 80%;
             max-width: 1400px;
