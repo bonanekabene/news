@@ -75,11 +75,9 @@
             background: #2e7d32;
             padding: 12px 0;
             color: #fff;
+            width: 100%;
+            
         }
-
-        .top-advert {
-    border: 5px solid red;
-}
 
         .advert-wrapper {
             width: 80%;
