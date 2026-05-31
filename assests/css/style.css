@@ -173,6 +173,14 @@
             flex-wrap: wrap;
         }
 
+        .top-header .container .header-wrapper .logo h1 {
+            font-size: 52px;
+            font-weight: 700;
+            color: #4caf50;
+            letter-spacing: 2px;
+            margin-top: 15px;
+        }
+
         /* .podcast-btn {
             background: #f2a400;
             color: #fff;
@@ -862,7 +870,7 @@
 
 
         footer {
-            background: linear-gradient(135deg, #1d0b3d, #2b1455);
+            background: #2e7d32;
             color: #fff;
             padding: 70px 80px 25px;
             position: relative;
@@ -877,7 +885,7 @@
             background:
                 radial-gradient(circle at left, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
             background-size: 180px 180px;
-            opacity: .3;
+            opacity: 3;
         }
 
         .footer-container {
@@ -924,7 +932,7 @@
 
         .social-icons a:hover {
             background: #fff;
-            color: #2b1455;
+            color: #2e7d32;
         }
 
         .footer-title {
@@ -998,7 +1006,7 @@
             border: none;
             border-radius: 12px;
             background: #fff;
-            color: #5b35ff;
+            color: #2e7d32;
             font-size: 24px;
             font-weight: 600;
             cursor: pointer;
