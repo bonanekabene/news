@@ -71,12 +71,11 @@
 
 
         /* Advertising Section */
-        .top-advert {
+        .topadvert {
             background: #2e7d32;
             padding: 12px 0;
             color: #fff;
             width: 100%;
-            
         }
 
         .advert-wrapper {
